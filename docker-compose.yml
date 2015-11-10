@@ -1,19 +1,37 @@
-am:
-        image: conductdocker/docker-am
-        ports: 
-                - "8080:8080"
-        links:  
-                - dj
-dj:
-        image: conductdocker/docker-dj
-idm:
-        image: conductdocker/docker-idm
-        ports:
-                - "9443:8443"
-                - "9080:8080"
-        links:
-                - am
-                - dj
-                - pg
-pg:
+postgres:
         image: conductdocker/docker-pg
+        expose:
+                - "5432"
+opendj:
+        image: conductdocker/docker-dj
+        expose:
+                - "4444"
+                - "8989"
+                - "1389"
+                - "1636"
+proxy:
+        image: conductdocker/docker-proxy
+        ports:
+                - "443:443"
+                - "80:80"
+                - "636:636"
+                - "389:389"
+        links: 
+                - opendj
+openam:
+        image: conductdocker/docker-am
+        expose:
+                - "8443"
+                - "8080"
+        links:  
+                - proxy:dj
+openidm:
+        image: conductdocker/docker-idm
+        expose:
+                - "8443"
+                - "8444"
+                - "8080"
+        links:
+                - proxy:dj
+                - proxy:am
+                - postgres:pg
