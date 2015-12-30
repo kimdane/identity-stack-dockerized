@@ -1,2 +1,6 @@
+# HOW TO
 
+## Install
+
+## Use
 
