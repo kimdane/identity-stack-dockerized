@@ -31,7 +31,7 @@
 -v /var/lib/id-stack/logs/openam-svc-a/debug:/root/openam/openam/debug
 
 ## Use
-Update /etc/hosts with the IP of your docker host IP and openam.example.com alias
+Update /etc/hosts with the IP of your docker host and openam.example.com as an alias
 
 	$ echo $DOCKER_HOST | egrep -o "\b(?:\d{1,3}\.){3}\d{1,3}\b" | xargs echo openam.example.com >> /etc/hosts
 
