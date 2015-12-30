@@ -1,0 +1,51 @@
+{
+    "serverAuthContext" : {
+        "authModules" : [
+            {
+                "name" : "OPENAM_SESSION",
+                "properties" : {
+                    "openamDeploymentUrl" : "http://openam:80/openam",
+                    "groupRoleMapping" : {
+                        "openidm-admin" : [
+                        ]
+                    },
+                    "openamSSOTokenCookieName" : "iPlanetDirectoryPro",
+                    "openamUserAttribute" : "mail",
+                    "queryOnResource" : "system/ldap/account",
+                    "propertyMapping" : {
+                        "authenticationId" : "mail",
+                        "groupMembership" : "ldapGroups"
+                    },
+                    "defaultUserRoles" : [
+                        "openidm-manager"
+                    ],
+                    "groupComparisonMethod" : "ldap",
+                    "managedUserLink" : "managedUser_systemLdapAccounts",
+                    "augmentSecurityContext" : {
+                        "type" : "text/javascript",
+                        "file" : "script/populateAsManagedUser.js"
+                    },
+                    "truststoreType" : "&{openidm.truststore.type}",
+                    "truststorePath" : "&{openidm.truststore.location}",
+                    "truststorePassword" : "&{openidm.truststore.password}"
+                },
+                "enabled" : true
+            },
+            {
+                "name" : "INTERNAL_USER",
+                "properties" : {
+                    "queryId" : "credential-internaluser-query",
+                    "queryOnResource" : "repo/internal/user",
+                    "propertyMapping" : {
+                        "authenticationId" : "username",
+                        "userCredential" : "password",
+                        "userRoles" : "roles"
+                    },
+                    "defaultUserRoles" : [ ]
+                },
+                "enabled" : true
+            }
+        ]
+    },
+    "_id" : "authentication"
+}
