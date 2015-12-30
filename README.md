@@ -26,17 +26,18 @@
 
 	$ mkdir -p /var/lib/id-stack/logs/openam-svc-a/log
 -v /var/lib/id-stack/logs/openam-svc-a/log:/root/openam/openam/debug
+
 	$ mkdir -p /var/lib/id-stack/logs/openam-svc-a/debug
 -v /var/lib/id-stack/logs/openam-svc-a/debug:/root/openam/openam/debug
 
 ## Use
-###Update /etc/hosts with the IP of your docker host IP and openam.example.com alias
+Update /etc/hosts with the IP of your docker host IP and openam.example.com alias
 	$ echo $DOCKER_HOST | egrep -o "\b(?:\d{1,3}\.){3}\d{1,3}\b" | xargs echo openam.example.com >> /etc/hosts
-### Self service OpenIDM
+#### Self service OpenIDM
 http://openam.example.com/
-### Admin console OpenIDM
+#### Admin console OpenIDM
 http://openam.example.com/admin
-### Admin console OpenAM
+#### Admin console OpenAM
 http://openam.example.com/openam
-### LDAP (use curl or LDAP browser)
+#### LDAP (use curl or LDAP browser)
 ldap://openam.example.com/dc=example,dc=com
