@@ -13,9 +13,9 @@
 	$ docker run -d --link opendj --name openam-svc-a -v /var/lib/id-stack/repo:/opt/repo conductdocker/openam-nightly
 	$ docker run -d --link opendj --name openam-svc-b -v /var/lib/id-stack/repo:/opt/repo conductdocker/openam-nightly
 	$ docker run -d --name postgres -e POSTGRES_PASSWORD=openidm -e POSTGRES_USER=openidm -v /var/lib/id-stack/repo/postgres:/docker-entrypoint-initdb.d postgres
-	$ docker run --link opendj --link postgres --name openidm -v /Users/kim/Code/iam-dockers/repo:/opt/repo conductdocker/openidm-nightly
-	$ docker run -d -p 443:443 -p 80:80 --link openam-svc-a --link openam-svc-b --link openidm --name openam.example.com haproxy-iam
-	$ docker run --rm --link openam-svc-a --link openam-svc-b --link opendj --name ssoconfig -v /var/lib/id-stack/repo:/opt/repo ssoconfig-nightly
+	$ docker run --link opendj --link postgres --name openidm -v /var/lib/id-stack/repo:/opt/repo conductdocker/openidm-nightly
+	$ docker run -d -p 443:443 -p 80:80 --link openam-svc-a --link openam-svc-b --link openidm --name openam.example.com conductdocker/haproxy-iam
+	$ docker run --rm --link openam-svc-a --link openam-svc-b --link opendj --name ssoconfig -v /var/lib/id-stack/repo:/opt/repo conductdocker/ssoconfig-nightly
 
 ## Optional volumes
 	$ mkdir /var/lib/id-stack/pgdata
