@@ -1,9 +1,9 @@
 {
     "configuration" : {
-        "selfRegistration" : false,
-        "passwordReset" : false,
+        "selfRegistration" : true,
+        "passwordReset" : true,
         "lang" : "en",
-        "passwordResetLink" : "/openam/XUI/#login/&service=OTPreset",
+        "passwordResetLink" : "",
         "roles" : {
             "openidm-authorized": "ui-user",
             "openidm-admin": "ui-admin"

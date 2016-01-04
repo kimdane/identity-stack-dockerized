@@ -29,10 +29,10 @@
                     },
                     "queryOnResource" : "system/ldap/account",
                     "managedUserLink" : "systemLdapAccounts_managedUser",
-                    "openamDeploymentUrl" : "http://openam.example.com/openam/",
+                    "openamDeploymentUrl" : "http://iam.example.com/openam/",
                     "openamUseExclusively" : false,
                     "openamSSOTokenCookieName" : "iPlanetDirectoryPro",
-                    "openamLoginUrl" : "http://openam.example.com/openam/XUI/#login/",
+                    "openamLoginUrl" : "http://iam.example.com/openam/XUI/#login/",
                     "openamUserAttribute" : "uid",
                     "groupComparisonMethod" : "ldap",
                     "augmentSecurityContext" : {
