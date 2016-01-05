@@ -15,10 +15,12 @@ openidm/db/postgresql/conf/repo.jdbc.json \
 -d /tmp/
 
 cd ..
-cp /tmp/openidm/db/postgresql/scripts/openidm.pgsql postgres/01_init.sql
-cp /tmp/openidm/db/postgresql/scripts/default_schema_optimization.pgsql postgres/02_optimize.sql
-cp openidm/conf/datasource.jdbc-default.json openidm/conf/datasource.jdbc-default.old
-cp openidm/conf/repo.jdbc.json openidm/conf/repo.jdbc.old
-cp /tmp/openidm/db/postgresql/conf/datasource.jdbc-default.json openidm/conf/datasource.jdbc-default.json
-cp /tmp/openidm/db/postgresql/conf/repo.jdbc.json openidm/conf/repo.jdbc.json
+mkdir updated_postgres
+mkdir updated_openidm
+cp /tmp/openidm/db/postgresql/scripts/openidm.pgsql updated_postgres/01_init.sql
+cp /tmp/openidm/db/postgresql/scripts/default_schema_optimization.pgsql updated_postgres/02_optimize.sql
+cp openidm/conf/datasource.jdbc-default.json updated_openidm/conf/datasource.jdbc-default.old
+cp openidm/conf/repo.jdbc.json updated_openidm/conf/repo.jdbc.old
+cp /tmp/openidm/db/postgresql/conf/datasource.jdbc-default.json updated_openidm/conf/datasource.jdbc-default.json
+cp /tmp/openidm/db/postgresql/conf/repo.jdbc.json updated_openidm/conf/repo.jdbc.json
 rm -r /tmp/openidm
