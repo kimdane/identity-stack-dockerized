@@ -1,34 +1,36 @@
 # HOW TO
 
 ## Install (after installing docker)
-	$ mkdir -p /usr/local/id-stack/
-	$ git clone https://github.com/ConductAS/identity-stack-dockerized.git /usr/local/id-stack/repo
-	$ cd /usr/local/id-stack/repo
-	$ chmod +x update-binaries.sh 
+Evry container will try to download binaries, but if you mount the repo and update the binaries you will only need to download them once.
+
+	$ git clone https://github.com/ConductAS/identity-stack-dockerized.git repo
+	$ cd repo
 	$ ./update-binaries.sh
 
+## Mount repository into a volume
+    $ docker create -d --name repo -v /full/host/path/to/repo:/opt/repo debian:jessie /bin/true
 
 ## Start containers
-	$ docker run -d --name opendj -v /usr/local/id-stack/repo:/opt/repo conductdocker/opendj-nightly
-	$ docker run -d --link opendj --name openam-svc-a -v /usr/local/id-stack/repo:/opt/repo conductdocker/openam-nightly
-	$ docker run -d --link opendj --name openam-svc-b -v /usr/local/id-stack/repo:/opt/repo conductdocker/openam-nightly
-	$ docker run -d --name postgres -e POSTGRES_PASSWORD=openidm -e POSTGRES_USER=openidm -v /usr/local/id-stack/repo/postgres:/docker-entrypoint-initdb.d postgres
-	$ docker run --link opendj --link postgres --name openidm -v /usr/local/id-stack/repo:/opt/repo conductdocker/openidm-nightly
+	$ docker run -d --name opendj --volumes-from repo conductdocker/opendj-nightly
+	$ docker run -d --link opendj --name openam-svc-a --volumes-from repo conductdocker/openam-nightly
+	$ docker run -d --link opendj --name openam-svc-b --volumes-from repo conductdocker/openam-nightly
+	$ docker run -d --name postgres -e POSTGRES_PASSWORD=openidm -e POSTGRES_USER=openidm -v /full/host/path/to/repo/postgres:/docker-entrypoint-initdb.d postgres
+	$ docker run --link opendj --link postgres --name openidm --volumes-from repo conductdocker/openidm-nightly
 	$ docker run -d -p 443:443 -p 80:80 -p 636:636 -p 389:389 --link opendj --link openam-svc-a --link openam-svc-b --link openidm --name iam.example.com conductdocker/haproxy-iam
-	$ docker run --rm --link openam-svc-a --link openam-svc-b --link opendj --name ssoconfig -v /usr/local/id-stack/repo:/opt/repo conductdocker/ssoconfig-nightly
+	$ docker run --rm --link openam-svc-a --link openam-svc-b --link opendj --name ssoconfig --volumes-from repo conductdocker/ssoconfig-nightly
 
 ## Optional volumes
-	$ mkdir /usr/local/id-stack/pgdata
--e PGDATA=/usr/local/postgresql/data/pgdata -v /usr/local/id-stack/pgdata:/var/lib/postgresql/data/pgdata 
+	$ mkdir /full/host/path/to/pgdata
+-e PGDATA=/usr/local/postgresql/data/pgdata -v /full/host/path/to/pgdata:/var/lib/postgresql/data/pgdata 
 
-	$ mkdir -p /usr/local/id-stack/logs/openidm
--v /usr/local/id-stack/logs/openidm:/opt/openidm/logs 
+	$ mkdir -p /full/host/path/to/logs/openidm
+-v /full/host/path/to/logs/openidm:/opt/openidm/logs 
 
-	$ mkdir -p /usr/local/id-stack/logs/openam-svc-a/log
--v /usr/local/id-stack/logs/openam-svc-a/log:/root/openam/openam/debug
+	$ mkdir -p /full/host/path/to/logs/openam-svc-a/log
+-v /full/host/path/to/logs/openam-svc-a/log:/root/openam/openam/debug
 
-	$ mkdir -p /usr/local/id-stack/logs/openam-svc-a/debug
--v /usr/local/id-stack/logs/openam-svc-a/debug:/root/openam/openam/debug
+	$ mkdir -p /full/host/path/to/logs/openam-svc-a/debug
+-v /full/host/path/to/logs/openam-svc-a/debug:/root/openam/openam/debug
 
 ## Use
 Update /etc/hosts with the IP of your docker host and openam.example.com as an alias
