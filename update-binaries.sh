@@ -7,6 +7,11 @@ curl -o /tmp/getnightly.sh https://raw.githubusercontent.com/ForgeRock/frstack/m
 chmod +x /tmp/getnightly.sh 
 /tmp/getnightly.sh openidm openam opendj openig
 
+curl http://maven.forgerock.org/repo/simple/snapshots/org/forgerock/openam/openam-distribution-ssoconfiguratortools/13.0.0-SNAPSHOT/ \
+   | grep -o 'href=.*\.zip\"' | grep -o 'openam.*zip' | \
+ 	xargs -I % curl -o staging/configurator.zip  \
+ 	http://maven.forgerock.org/repo/simple/snapshots/org/forgerock/openam/openam-distribution-ssoconfiguratortools/13.0.0-SNAPSHOT/%
+
 unzip staging/openidm.zip \
 openidm/db/postgresql/scripts/openidm.pgsql \
 openidm/db/postgresql/scripts/default_schema_optimization.pgsql \

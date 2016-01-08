@@ -7,30 +7,36 @@ Evry container will try to download binaries, but if you mount the repo and upda
 	$ cd repo
 	$ ./update-binaries.sh
 
+The update also fetches some new config files in separate folders for OpenIDM, which you might need if the default database schema has changed.
+
 ## Mount repository into a volume
-    $ docker create -d --name repo -v /full/host/path/to/repo:/opt/repo debian:jessie /bin/true
+"If you are using Docker Machine on Mac or Windows, your Docker daemon has only limited access to your OS X or Windows filesystem." So make sure you use a path starting with /Users/ or /c/Users/ for OS X and Windows.
+
+    $ docker create --name repo -v $(pwd)/repo:/opt/repo debian:jessie /bin/true
 
 ## Start containers
 	$ docker run -d --name opendj --volumes-from repo conductdocker/opendj-nightly
 	$ docker run -d --link opendj --name openam-svc-a --volumes-from repo conductdocker/openam-nightly
 	$ docker run -d --link opendj --name openam-svc-b --volumes-from repo conductdocker/openam-nightly
-	$ docker run -d --name postgres -e POSTGRES_PASSWORD=openidm -e POSTGRES_USER=openidm -v /full/host/path/to/repo/postgres:/docker-entrypoint-initdb.d postgres
-	$ docker run --link opendj --link postgres --name openidm --volumes-from repo conductdocker/openidm-nightly
+	$ docker run -d --name postgres -e POSTGRES_PASSWORD=openidm -e POSTGRES_USER=openidm -v $(pwd)/repo/postgres:/docker-entrypoint-initdb.d postgres
+	$ docker run -d --link opendj --link postgres --name openidm --volumes-from repo conductdocker/openidm-nightly
 	$ docker run -d -p 443:443 -p 80:80 -p 636:636 -p 389:389 --link opendj --link openam-svc-a --link openam-svc-b --link openidm --name iam.example.com conductdocker/haproxy-iam
 	$ docker run --rm --link openam-svc-a --link openam-svc-b --link opendj --name ssoconfig --volumes-from repo conductdocker/ssoconfig-nightly
 
+(You might need to run the last container twice if configuration fails first time.)
+
 ## Optional volumes
-	$ mkdir /full/host/path/to/pgdata
--e PGDATA=/usr/local/postgresql/data/pgdata -v /full/host/path/to/pgdata:/var/lib/postgresql/data/pgdata 
+	$ mkdir $(pwd)/pgdata
+-e PGDATA=/usr/local/postgresql/data/pgdata -v $(pwd)/pgdata:/var/lib/postgresql/data/pgdata 
 
-	$ mkdir -p /full/host/path/to/logs/openidm
--v /full/host/path/to/logs/openidm:/opt/openidm/logs 
+	$ mkdir -p $(pwd)/logs/openidm
+-v $(pwd)/logs/openidm:/opt/openidm/logs 
 
-	$ mkdir -p /full/host/path/to/logs/openam-svc-a/log
--v /full/host/path/to/logs/openam-svc-a/log:/root/openam/openam/debug
+	$ mkdir -p $(pwd)/logs/openam-svc-a/log
+-v $(pwd)/logs/openam-svc-a/log:/root/openam/openam/debug
 
-	$ mkdir -p /full/host/path/to/logs/openam-svc-a/debug
--v /full/host/path/to/logs/openam-svc-a/debug:/root/openam/openam/debug
+	$ mkdir -p $(pwd)/logs/openam-svc-a/debug
+-v $(pwd)/logs/openam-svc-a/debug:/root/openam/openam/debug
 
 ## Use
 Update /etc/hosts with the IP of your docker host and openam.example.com as an alias
