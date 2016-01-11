@@ -25,7 +25,7 @@ The update also fetches some new config files in separate folders for OpenIDM, w
 
 (You might need to run the last container twice if configuration fails first time.)
 
-## Optional volumes
+### Optional volumes
 	$ mkdir $(pwd)/pgdata
 -e PGDATA=/usr/local/postgresql/data/pgdata -v $(pwd)/pgdata:/var/lib/postgresql/data/pgdata 
 
@@ -41,7 +41,7 @@ The update also fetches some new config files in separate folders for OpenIDM, w
 ## Use
 Update /etc/hosts with the IP of your docker host and openam.example.com as an alias
 
-	$ echo $DOCKER_HOST | egrep -o "\b(?:\d{1,3}\.){3}\d{1,3}\b" | xargs echo iam.example.com >> /etc/hosts
+	$ sudo -Es 'echo $(echo $DOCKER_HOST | egrep -o "\b(?:\d{1,3}\.){3}\d{1,3}\b") iam.example.com >> /etc/hosts' 
 
 #### Self service OpenIDM
 http://iam.example.com/
