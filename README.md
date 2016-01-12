@@ -1,16 +1,14 @@
 # HOW TO
 
-## Install (after installing docker)
-Evry container will try to download binaries, but if you mount the repo and update the binaries you will only need to download them once.
+## Download binaries from ForgeRock nightly builds
+Evry container will try to download binaries on it's own, but if you update the binaries and mount the repository as a docker volume they will not need to be downloaded each time you create a new stack.
 
-	$ git clone https://github.com/ConductAS/identity-stack-dockerized.git repo
-	$ cd repo
-	$ ./update-binaries.sh
+	$ ./fetch-binaries.sh
 
-The update also fetches some new config files in separate folders for OpenIDM, which you might need if the default database schema has changed.
+The update also fetches some new config files into separate folders for OpenIDM and PostgreSQL, which you might need if the default database schema has changed.
 
 ## Mount repository into a volume and Start containers
-#### With docker compose (also mounting the volume above)
+#### With docker compose (also mounting repository as a volume)
 	$ docker-compose up
 
 #### Or without compose launching one by one
@@ -19,7 +17,7 @@ The update also fetches some new config files in separate folders for OpenIDM, w
 
     $ docker create --name repo -v $(pwd):/opt/repo debian:jessie /bin/true
 
-#### Start containers
+##### Start containers
 	$ docker run -d --name opendj --volumes-from repo conductdocker/opendj-nightly
 	$ docker run -d --link opendj --name openam-svc-a --volumes-from repo conductdocker/openam-nightly
 	$ docker run -d --link opendj --name openam-svc-b --volumes-from repo conductdocker/openam-nightly
@@ -30,7 +28,7 @@ The update also fetches some new config files in separate folders for OpenIDM, w
 
 (You might need to run the last container twice if configuration fails first time.)
 
-### Optional volumes
+##### Optional volumes
 	$ mkdir $(pwd)/pgdata
 -e PGDATA=/usr/local/postgresql/data/pgdata -v $(pwd)/pgdata:/var/lib/postgresql/data/pgdata 
 
@@ -48,11 +46,13 @@ Update /etc/hosts with the IP of your docker host and openam.example.com as an a
 
 	$ sudo -Es 'echo $(echo $DOCKER_HOST | egrep -o "\b(?:\d{1,3}\.){3}\d{1,3}\b") iam.example.com >> /etc/hosts' 
 
-#### Self service OpenIDM
+(The HaProxy is also set up with TLS for HTTPS and LDAPS)
+
+#### Self service OpenIDM (openidm-admin/openidm-admin)
 http://iam.example.com/
-#### Admin console OpenIDM
+#### Admin console OpenIDM (openidm-admin/openidm-admin)
 http://iam.example.com/admin
-#### Admin console OpenAM
+#### Admin console OpenAM (amadmin/password)
 http://iam.example.com/openam
-#### LDAP (use curl or LDAP browser)
+#### LDAP (use curl or LDAP browser) (cn=directory manager/password)
 ldap://iam.example.com/dc=example,dc=com
