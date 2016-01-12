@@ -42,7 +42,7 @@ The update also fetches some new config files into separate folders for OpenIDM 
 -v $(pwd)/logs/openam-svc-a/debug:/root/openam/openam/debug
 
 ## Use
-Update /etc/hosts with the IP of your docker host and openam.example.com as an alias
+Update /etc/hosts with the IP of your docker host and iam.example.com as an alias
 
 	$ sudo -Es 'echo $(echo $DOCKER_HOST | egrep -o "\b(?:\d{1,3}\.){3}\d{1,3}\b") iam.example.com >> /etc/hosts' 
 
