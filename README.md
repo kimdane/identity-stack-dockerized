@@ -20,7 +20,7 @@ The update also fetches some new config files in separate folders for OpenIDM, w
 	$ docker run -d --link opendj --name openam-svc-b --volumes-from repo conductdocker/openam-nightly
 	$ docker run -d --name postgres -e POSTGRES_PASSWORD=openidm -e POSTGRES_USER=openidm -v $(pwd)/repo/postgres:/docker-entrypoint-initdb.d postgres
 	$ docker run -d --link opendj --link postgres --name openidm --volumes-from repo conductdocker/openidm-nightly
-	$ docker run -d -p 443:443 -p 80:80 -p 636:636 -p 389:389 --link opendj --link openam-svc-a --link openam-svc-b --link openidm --name iam.example.com conductdocker/haproxy-iam
+	$ docker run -d -p 443:443 -p 80:80 -p 636:636 -p 389:389 --restart=always --link opendj --link openam-svc-a --link openam-svc-b --link openidm --name iam.example.com conductdocker/haproxy-iam
 	$ docker run --rm --link openam-svc-a --link openam-svc-b --link opendj --name ssoconfig --volumes-from repo conductdocker/ssoconfig-nightly
 
 (You might need to run the last container twice if configuration fails first time.)
