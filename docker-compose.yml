@@ -1,0 +1,49 @@
+repo:
+ image: debian:jessie
+ volumes:
+  - .:/opt/repo
+ command: /bin/true
+opendj:
+ image: conductdocker/opendj-nightly
+ volumes_from:
+  - repo
+openam:
+ image: conductdocker/openam-nightly
+ links:
+  - opendj:opendj
+ volumes_from:
+  - repo
+postgres:
+ image: postgres
+ environment:
+  - POSTGRES_PASSWORD=openidm
+  - POSTGRES_USER=openidm
+ volumes:
+  - ./postgres:/docker-entrypoint-initdb.d
+openidm:
+ image: conductdocker/openidm-nightly
+ links:
+  - opendj:opendj
+  - postgres:postgres
+ volumes_from:
+  - repo
+iam.example.com:
+ container_name: iam.example.com
+ image: conductdocker/haproxy-iam
+ links:
+  - opendj:opendj
+  - openidm:openidm
+  - openam:openam-svc-a
+ restart: always
+ ports: 
+  - 389:389/tcp
+  - 636:636/tcp
+  - 80:80/tcp
+  - 443:443/tcp
+ssoconfig:
+ volumes_from:
+  - repo
+ image: conductdocker/ssoconfig-nightly
+ links:
+  - opendj:opendj
+  - openam:openam-svc-a

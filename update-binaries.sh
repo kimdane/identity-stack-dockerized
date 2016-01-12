@@ -21,7 +21,7 @@ openidm/db/postgresql/conf/repo.jdbc.json \
 
 cd ..
 mkdir updated_postgres
-mkdir updated_openidm
+mkdir -p updated_openidm/conf
 cp /tmp/openidm/db/postgresql/scripts/openidm.pgsql updated_postgres/01_init.sql
 cp /tmp/openidm/db/postgresql/scripts/default_schema_optimization.pgsql updated_postgres/02_optimize.sql
 cp openidm/conf/datasource.jdbc-default.json updated_openidm/conf/datasource.jdbc-default.old

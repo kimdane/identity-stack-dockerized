@@ -9,16 +9,21 @@ Evry container will try to download binaries, but if you mount the repo and upda
 
 The update also fetches some new config files in separate folders for OpenIDM, which you might need if the default database schema has changed.
 
-## Mount repository into a volume
+## Mount repository into a volume and Start containers
+#### With docker compose (also mounting the volume above)
+	$ docker-compose up
+
+#### Or without compose launching one by one
+##### Mount repository into a volume
 "If you are using Docker Machine on Mac or Windows, your Docker daemon has only limited access to your OS X or Windows filesystem." So make sure you use a path starting with /Users/ or /c/Users/ for OS X and Windows.
 
-    $ docker create --name repo -v $(pwd)/repo:/opt/repo debian:jessie /bin/true
+    $ docker create --name repo -v $(pwd):/opt/repo debian:jessie /bin/true
 
-## Start containers
+#### Start containers
 	$ docker run -d --name opendj --volumes-from repo conductdocker/opendj-nightly
 	$ docker run -d --link opendj --name openam-svc-a --volumes-from repo conductdocker/openam-nightly
 	$ docker run -d --link opendj --name openam-svc-b --volumes-from repo conductdocker/openam-nightly
-	$ docker run -d --name postgres -e POSTGRES_PASSWORD=openidm -e POSTGRES_USER=openidm -v $(pwd)/repo/postgres:/docker-entrypoint-initdb.d postgres
+	$ docker run -d --name postgres -e POSTGRES_PASSWORD=openidm -e POSTGRES_USER=openidm -v $(pwd)/postgres:/docker-entrypoint-initdb.d postgres
 	$ docker run -d --link opendj --link postgres --name openidm --volumes-from repo conductdocker/openidm-nightly
 	$ docker run -d -p 443:443 -p 80:80 -p 636:636 -p 389:389 --restart=always --link opendj --link openam-svc-a --link openam-svc-b --link openidm --name iam.example.com conductdocker/haproxy-iam
 	$ docker run --rm --link openam-svc-a --link openam-svc-b --link opendj --name ssoconfig --volumes-from repo conductdocker/ssoconfig-nightly
