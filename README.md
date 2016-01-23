@@ -56,3 +56,8 @@ http://iam.example.com/admin
 http://iam.example.com/openam
 #### LDAP (use curl or LDAP browser) (cn=directory manager/password)
 ldap://iam.example.com/dc=example,dc=com
+
+## Enabling/Disabling Persistence
+By default, the containers do not include peristence and data in openAM and openDJ will be lost if the containers are destoyed.
+Scripts are provided to help make it easy to enable and disable peristence.
+`$ ./make-persistent.sh` will modify the docker-compose file in place to add support for persistence and `$ ./clear-persistent.sh` will remove it as well as delete the persistnece folders that have been created.
