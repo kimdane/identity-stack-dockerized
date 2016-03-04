@@ -11,10 +11,10 @@ AM="BAD"
 echo -n "Use latest releases? [Y/n]: "
 read nightly
 if [ "$nightly" == "n" ]; then 
-	AM_VERSION=$(grep "^AM_VERSION" /tmp/getnightly.sh|grep -o "\d*\.\d*\.\d*")
-	IDM_VERSION=$(grep "^IDM_VERSION" /tmp/getnightly.sh|grep -o "\d*\.\d*\.\d*")
-	DJ_VERSION=$(grep "^DJ_VERSION" /tmp/getnightly.sh|grep -o "\d*\.\d*\.\d*")
-	IG_VERSION=$(grep "^IG_VERSION" /tmp/getnightly.sh|grep -o "\d*\.\d*\.\d*")
+	AM_VERSION=$(grep "^AM_VERSION" /tmp/getnightly.sh|grep -o "[0-9]*\.[0-9]*\.[0-9]*")
+	IDM_VERSION=$(grep "^IDM_VERSION" /tmp/getnightly.sh|grep -o "[0-9]*\.[0-9]*\.[0-9]*")
+	DJ_VERSION=$(grep "^DJ_VERSION" /tmp/getnightly.sh|grep -o "[0-9]*\.[0-9]*\.[0-9]*")
+	IG_VERSION=$(grep "^IG_VERSION" /tmp/getnightly.sh|grep -o "[0-9]*\.[0-9]*\.[0-9]*")
 	echo -n "OpenAM version [$AM_VERSION]: "
 	read AM
 	if [ -z "${AM}" ]; then AM=$AM_VERSION;fi
