@@ -1,7 +1,7 @@
 repo:
  image: debian:jessie
-# volumes:
-#   - $PWD:/opt/repo
+ volumes:
+   - $PWD:/opt/repo
  command: /bin/true
 opendj:
  image: conductdocker/opendj-nightly
