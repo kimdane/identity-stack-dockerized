@@ -74,4 +74,9 @@ cp openidm/conf/repo.jdbc.json openidm/conf/repo.jdbc.old
 cp /tmp/openidm/db/postgresql/conf/datasource.jdbc-default.json openidm/conf/datasource.jdbc-default.json
 cp /tmp/openidm/db/postgresql/conf/repo.jdbc.json openidm/conf/repo.jdbc.json
 rm -r /tmp/openidm
+if [ "$(uname)" == "Darwin" ]; then
+	sed -i '' 's/localhost:5432/postgres:5432/g' openidm/conf/datasource.jdbc-default.json
+else
+	sed -i 's/localhost:5432/postgres:5432/g' openidm/conf/datasource.jdbc-default.json
+fi
 
