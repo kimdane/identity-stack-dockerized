@@ -7,6 +7,40 @@ cd bin
 # Get openidm openam opendj and openig from ForgeRocks nightly builds GitHub repo
 curl -o /tmp/getnightly.sh https://raw.githubusercontent.com/ForgeRock/frstack/master/bin/getnightly.sh
 chmod +x /tmp/getnightly.sh 
+AM="BAD"
+echo -n "Use latest releases? [Y/n]: "
+read nightly
+if [ "$nightly" == "n" ]; then 
+	AM_VERSION=$(grep "^AM_VERSION" /tmp/getnightly.sh|grep -o "\d*\.\d*\.\d*")
+	IDM_VERSION=$(grep "^IDM_VERSION" /tmp/getnightly.sh|grep -o "\d*\.\d*\.\d*")
+	DJ_VERSION=$(grep "^DJ_VERSION" /tmp/getnightly.sh|grep -o "\d*\.\d*\.\d*")
+	IG_VERSION=$(grep "^IG_VERSION" /tmp/getnightly.sh|grep -o "\d*\.\d*\.\d*")
+	echo -n "OpenAM version [$AM_VERSION]: "
+	read AM
+	if [ -z "${AM}" ]; then AM=$AM_VERSION;fi
+	echo -n "OpenIDM version [$IDM_VERSION]: "
+	read IDM
+	if [ -z "${IDM}" ]; then IDM=$IDM_VERSION;fi
+	echo -n "OpenDJ version [$DJ_VERSION]: "
+	read DJ
+	if [ -z "${DJ}" ]; then DJ=$DJ_VERSION;fi
+	echo -n "OpenIG version [$IG_VERSION]: "
+	read IG
+	if [ -z "${IG}" ]; then IG=$IG_VERSION;fi
+
+	if [ "$(uname)" == "Darwin" ]; then
+		sed -i '' 's/^AM_VERSION.*/AM_VERSION="'$AM'-SNAPSHOT"/' /tmp/getnightly.sh
+		sed -i '' 's/^IDM_VERSION.*/IDM_VERSION="'$IDM'-SNAPSHOT"/' /tmp/getnightly.sh
+		sed -i '' 's/^DJ_VERSION.*/DJ_VERSION="'$DJ'-SNAPSHOT"/' /tmp/getnightly.sh
+		sed -i '' 's/^IG_VERSION.*/IG_VERSION="'$IG'-SNAPSHOT"/' /tmp/getnightly.sh
+	else
+		sed -i 's/^AM_VERSION.*/AM_VERSION="'$AM'-SNAPSHOT"/' /tmp/getnightly.sh
+		sed -i 's/^IDM_VERSION.*/IDM_VERSION="'$IDM'-SNAPSHOT"/' /tmp/getnightly.sh
+		sed -i 's/^DJ_VERSION.*/DJ_VERSION="'$DJ'-SNAPSHOT"/' /tmp/getnightly.sh
+		sed -i 's/^IG_VERSION.*/IG_VERSION="'$IG'-SNAPSHOT"/' /tmp/getnightly.sh
+	fi
+fi
+
 /tmp/getnightly.sh openidm openam opendj openig
 
 # Get the right version (by parsing the RELEASE-file after downloading nightly
