@@ -1,3 +1,8 @@
+ForgeRock has now closed off the unauthenticated downloads from http://maven.forgerock.org/repo/snapshots/org/forgerock/
+this means that the script would have to violate the ForgeRocks EULA/terms and conditons if it where to auto-download.
+
+A workaround is in progress, but until further notice identity-stack-dockerized will not work.
+
 # HOW TO
 
 ## Download binaries from ForgeRock nightly builds
