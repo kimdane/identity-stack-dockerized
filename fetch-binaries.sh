@@ -136,7 +136,7 @@ for item in $items; do
    case $item in
    openam)  download_file `grep_file $AM_SERVER_PATH war` openam.war;;
    ssoadm)  download_file `grep_file $AM_SSOTOOLS_PATH zip`  ssoadmintools.zip;;
-   ssoconfig) download_file `grep_file $AM_SSOCONFIGTOOLS_PATH zip` ssoconfiguratortools.zip;;
+   ssoconfig) download_file `grep_file $AM_SSOCONFIGTOOLS_PATH zip` configurator.zip;;
    openidm) download_file `grep_file $IDM_PATH zip` openidm.zip;;
    openig)  download_file `grep_file $IG_PATH war` openig.war;;
    opendj)  download_file `grep_file $DJ_PATH zip` opendj.zip;;
