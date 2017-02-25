@@ -33,9 +33,11 @@ openidm:
   - repo
 #Persistence volumes: #Persistence
 #Persistence  - $PWD/persistence/openidm:/opt/openidm #Persistence
-iam.example.com:
- #container_name: iam.example.com
+iam.xdct.net:
+ #container_name: iam.xdct.net
  image: conductdocker/haproxy-iam
+ volumes:
+   - $PWD/ssl:/etc/ssl
  links:
   - opendj:opendj
   - openidm:openidm
