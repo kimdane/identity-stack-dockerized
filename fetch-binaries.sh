@@ -19,8 +19,8 @@ fi
 MVN_SNAPSHOT="http://maven.forgerock.org:80/repo/releases"
 
 
-AM_VERSION="13.0.0"
-IDM_VERSION="4.5.0"
+AM_VERSION="13.5.0"
+IDM_VERSION="4.0.0"
 IG_VERSION="4.0.0"
 DJ_VERSION="3.0.0"
 
@@ -137,7 +137,7 @@ for item in $items; do
    openam)  download_file `grep_file $AM_SERVER_PATH war` openam.war;;
    ssoadm)  download_file `grep_file $AM_SSOTOOLS_PATH zip`  ssoadmintools.zip;;
    ssoconfig) download_file `grep_file $AM_SSOCONFIGTOOLS_PATH zip` configurator.zip;;
-   openidm) download_file `grep_file $IDM_PATH zip` openidm.zip;;
+   openidm) download_file `grep_file $IDM_PATH \.zip` openidm.zip;;
    openig)  download_file `grep_file $IG_PATH war` openig.war;;
    opendj)  download_file `grep_file $DJ_PATH zip` opendj.zip;;
    apache)  apache;;
