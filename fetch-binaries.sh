@@ -1,16 +1,17 @@
 #!/bin/bash
-mkdir openidm
-mkdir postgres
 
-echo -n "Input your ForgeRock Backstage username: "
-read USERNAME
-echo -n "Input your ForgeRock Backstage password: "
-read -s PASSWORD
-if [ "`curl -s -u $USERNAME:$PASSWORD -o /dev/null -w "%{http_code}" http://maven.forgerock.org:80/repo/forgerock-virtual/`" == "200" ];then 
-	echo "Username and password accepted";
-else 
-	echo "Incorrect username or password";
-fi
+#mkdir openidm
+#mkdir postgres
+
+#echo -n "Input your ForgeRock Backstage username: "
+#read USERNAME
+#echo -n "Input your ForgeRock Backstage password: "
+#read -s PASSWORD
+#if [ "`curl -s -u $USERNAME:$PASSWORD -o /dev/null -w "%{http_code}" http://maven.forgerock.org:80/repo/forgerock-virtual/`" == "200" ];then 
+#	echo "Username and password accepted";
+#else 
+#	echo "Incorrect username or password";
+#fi
 
 ## Get openidm openam opendj and openig from ForgeRocks nightly builds GitHub repo
 
@@ -24,10 +25,10 @@ IDM_VERSION="4.0.0"
 IG_VERSION="4.0.0"
 DJ_VERSION="3.0.0"
 
+$stable = "y"
 
-AM="BAD"
-echo -n "Use stable releases? [Y/n]: "
-read stable
+#echo -n "Use stable releases? [Y/n]: "
+#read stable
 if [ "$stable" == "n" ]; then
 	MVN_SNAPSHOT="http://maven.forgerock.org:80/repo/forgerock-virtual"
 	AM_VERSION="14.0.1-SNAPSHOT"
