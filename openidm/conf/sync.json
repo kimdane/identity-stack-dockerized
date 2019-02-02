@@ -165,67 +165,7 @@
                     "situation" : "UNASSIGNED",
                     "action" : "IGNORE"
                 }
-            ],
-            "recon" : {
-                "_id" : "07f37e62-1f92-47f6-9ecf-5b07fbafffb3-727",
-                "mapping" : "managedUser_systemLdapAccounts",
-                "state" : "FAILED",
-                "stage" : "COMPLETED_FAILED",
-                "stageDescription" : "reconciliation failed",
-                "progress" : {
-                    "source" : {
-                        "existing" : {
-                            "processed" : 0,
-                            "total" : "0"
-                        }
-                    },
-                    "target" : {
-                        "existing" : {
-                            "processed" : 0,
-                            "total" : "?"
-                        },
-                        "created" : 0
-                    },
-                    "links" : {
-                        "existing" : {
-                            "processed" : 0,
-                            "total" : "?"
-                        },
-                        "created" : 0
-                    }
-                },
-                "situationSummary" : {
-                    "SOURCE_IGNORED" : 0,
-                    "UNASSIGNED" : 0,
-                    "AMBIGUOUS" : 0,
-                    "CONFIRMED" : 0,
-                    "FOUND_ALREADY_LINKED" : 0,
-                    "UNQUALIFIED" : 0,
-                    "ABSENT" : 0,
-                    "TARGET_IGNORED" : 0,
-                    "SOURCE_MISSING" : 0,
-                    "MISSING" : 0,
-                    "FOUND" : 0
-                },
-                "statusSummary" : {
-                    "SUCCESS" : 0,
-                    "FAILURE" : 0
-                },
-                "parameters" : {
-                    "sourceQuery" : {
-                        "resourceName" : "managed/user",
-                        "queryId" : "query-all-ids"
-                    },
-                    "targetQuery" : {
-                        "resourceName" : "system/ldap/account",
-                        "queryId" : "query-all-ids"
-                    }
-                },
-                "started" : "2015-12-04T15:35:47.014Z",
-                "ended" : "2015-12-04T15:35:47.083Z",
-                "duration" : 69
-            }
+            ]
         }
-    ],
-    "_id" : "sync"
+    ]
 }

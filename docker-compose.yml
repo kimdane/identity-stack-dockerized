@@ -2,15 +2,15 @@ repo:
  image: debian:jessie
  volumes:
    - $PWD:/opt/repo
- command: /bin/true
+# command: /bin/true
 opendj:
- image: conductdocker/opendj-nightly
+ image: kimdane/opendj
  volumes_from:
   - repo
 #Persistence volumes: #Persistence
 #Persistence  - $PWD/persistence/opendj_data:/opt/opendj/instances/instance1 #Persistence
 openam:
- image: conductdocker/openam-nightly
+ image: kimdane/openam
  links:
   - opendj:opendj
  volumes_from:
@@ -23,9 +23,11 @@ postgres:
 #Persistence  - PGDATA=/usr/local/postgresql/data/pgdata #Persistence
  volumes: 
   - $PWD/postgres:/docker-entrypoint-initdb.d
+ #volumes_from:
+ # - repo
 #Persistence  - $PWD/persistence/pgdata:/usr/local/postgresql/data #Persistence
 openidm:
- image: conductdocker/openidm-nightly
+ image: kimdane/openidm
  links:
   - opendj:opendj
   - postgres:postgres
@@ -35,7 +37,7 @@ openidm:
 #Persistence  - $PWD/persistence/openidm:/opt/openidm #Persistence
 iam.example.com:
  #container_name: iam.example.com
- image: conductdocker/haproxy-iam
+ image: kimdane/haproxy-iam
  volumes:
    - $PWD/ssl:/etc/ssl
  links:
@@ -51,7 +53,7 @@ iam.example.com:
 ssoconfig:
  volumes_from:
   - repo
- image: conductdocker/ssoconfig-nightly
+ image: kimdane/ssoconfig
  links:
   - opendj:opendj
   - openam:openam-svc-a

@@ -10,17 +10,7 @@
         "port" : 389,
         "ssl" : false,
         "principal" : "cn=Directory Manager",
-        "credentials" : {
-            "$crypto" : {
-                "type" : "x-simple-encryption",
-                "value" : {
-                    "cipher" : "AES/CBC/PKCS5Padding",
-                    "data" : "EeQsTj1T37baVP5nmWtt2Q==",
-                    "iv" : "gMKrZoEmu5Q5/ODSAwYjyQ==",
-                    "key" : "openidm-sym-default"
-                }
-            }
-        },
+        "credentials" : "password",
         "baseContexts" : [
             "dc=example,dc=com"
         ],
@@ -168,6 +158,16 @@
                     },
                     "nativeName" : "ldapGroups",
                     "nativeType" : "string"
+                },
+                "aliasList" : {
+                    "type" : "array",
+                    "items" : {
+                        "type" : "string",
+                        "nativeType" : "string"
+                    },
+                    "nativeType" : "string",
+                    "nativeName" : "iplanet-am-user-alias-list",
+                    "required" : false
                 },
                 "disabled" : {
                     "type" : "string",
