@@ -45,6 +45,7 @@
             <Arg>
                 <New class="org.eclipse.jetty.server.ForwardedRequestCustomizer">
                     <!-- Prevent host header changes that may occur from URL hijacking attempts -->
+                    <!--
                     <Set name="hostHeader">
                         <Call class="org.forgerock.openidm.jetty.Param" name="getProperty">
                             <Arg>openidm.host</Arg>
@@ -52,6 +53,7 @@
                         <Arg>openidm.port.http</Arg>
                     </Call>
                     </Set>
+                    -->
                 </New>
             </Arg>
         </Call>

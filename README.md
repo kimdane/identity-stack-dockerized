@@ -5,10 +5,8 @@ A workaround is in progress, but until further notice identity-stack-dockerized 
 
 # HOW TO
 
-## Download binaries from ForgeRock nightly builds
-Evry container will try to download binaries on it's own, but if you update the binaries and mount the repository as a docker volume they will not need to be downloaded each time you create a new stack.
-
-	$ ./fetch-binaries.sh
+## Download binaries from ForgeRock 
+Place your binaries in bin/zip/ (like bin/zip/openam.zip) or in folders like bin/openam (the extracted zip file), bin/opendj, bin/openidm
 
 The update also fetches some new config files into separate folders for OpenIDM and PostgreSQL, which you might need if the default database schema has changed.
 
@@ -23,13 +21,13 @@ The update also fetches some new config files into separate folders for OpenIDM 
     $ docker create --name repo -v $(pwd):/opt/repo debian:jessie /bin/true
 
 ##### Start containers
-	$ docker run -d --name opendj --volumes-from repo conductdocker/opendj-nightly
-	$ docker run -d --link opendj --name openam-svc-a --volumes-from repo conductdocker/openam-nightly
-	$ docker run -d --link opendj --name openam-svc-b --volumes-from repo conductdocker/openam-nightly
+	$ docker run -d --name opendj --volumes-from repo kimdane/opendj-nightly
+	$ docker run -d --link opendj --name openam-svc-a --volumes-from repo kimdane/openam-nightly
+	$ docker run -d --link opendj --name openam-svc-b --volumes-from repo kimdane/openam-nightly
 	$ docker run -d --name postgres -e POSTGRES_PASSWORD=openidm -e POSTGRES_USER=openidm -v $(pwd)/postgres:/docker-entrypoint-initdb.d postgres
-	$ docker run -d --link opendj --link postgres --name openidm --volumes-from repo conductdocker/openidm-nightly
-	$ docker run -d -p 443:443 -p 80:80 -p 636:636 -p 389:389 --restart=always --link opendj --link openam-svc-a --link openam-svc-b --link openidm --name iam.example.com conductdocker/haproxy-iam
-	$ docker run --rm --link openam-svc-a --link openam-svc-b --link opendj --name ssoconfig --volumes-from repo conductdocker/ssoconfig-nightly
+	$ docker run -d --link opendj --link postgres --name openidm --volumes-from repo kimdane/openidm-nightly
+	$ docker run -d -p 443:443 -p 80:80 -p 636:636 -p 389:389 --restart=always --link opendj --link openam-svc-a --link openam-svc-b --link openidm --name iam.example.com kimdane/haproxy-iam
+	$ docker run --rm --link openam-svc-a --link openam-svc-b --link opendj --name ssoconfig --volumes-from repo kimdane/ssoconfig-nightly
 
 (You might need to run the last container twice if configuration fails first time.)
 
