@@ -1,5 +1,6 @@
 repo:
- image: debian:jessie
+ #image: debian:jessie
+ image: kimdane/docker-repo
  volumes:
    - $PWD:/opt/repo
 # command: /bin/true
